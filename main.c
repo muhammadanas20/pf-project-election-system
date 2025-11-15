@@ -274,13 +274,14 @@ void addCandidates(){
       if(found){
         printf("Login sucessfull\n");
         if (currentStudent.hasvoted){
-            printf("You already cast a vote!\nNothing changes happen again");
+            printf("You already cast a vote!\nVote cannot be withrawn.");
             pressEnter();
+            viewResult();
             return;
         }
         else{
              voteCasting(currentStudent);
-             pressEnter();
+             viewResult();
         }
       }
       else{
