@@ -39,3 +39,9 @@ The system uses **file handling** to store student and candidate data persistent
 1. Clone the repository:
    ```bash
    git clone https://github.com/your-username/pf-online-election-system.git
+2.compile and run:
+ ```bash
+   gcc main.c -o election_system
+   ./election_system
+
+
