@@ -280,6 +280,7 @@ void addCandidates(){
         }
         else{
              voteCasting(currentStudent);
+             pressEnter();
         }
       }
       else{
@@ -297,7 +298,7 @@ void addCandidates(){
        printf("---------------------------------------\n");
        printf("          VOTE CASTING                 \n");
        printf("---------------------------------------\n");
-       printf("Hello %s choose a candidate: ",loggedInStudent.name);
+       printf("Hello %s choose a candidate.\n",loggedInStudent.name);
 
        fp = fopen(candidate_file,"rb");
        if(fp == NULL){
@@ -318,6 +319,7 @@ void addCandidates(){
        fp = fopen(candidate_file,"r+b");
        if (fp == NULL) {
         printf("Error processing vote.\n");
+        pressEnter();
         return;
     }
     while(fread(&candidate,sizeof(struct candidates),1,fp)){
@@ -340,6 +342,7 @@ void addCandidates(){
     fpstudent = fopen(students_file,"r+b");
     if(fpstudent == NULL ){
         printf("Error finalizing vote.\n");
+        pressEnter();
         return;
     }
     struct students tempstudent;
@@ -390,15 +393,18 @@ void viewResult(){
     printf("---------------------------------------\n");
     if(total_votes == 0){
         printf("No votes is being cast\n");
+        pressEnter();
         return;
     }
     else{
         printf("Total vote Cast: %d\n",total_votes);
         if(winner_found){
         printf("Current winner is %s , ID %d with %d votes\n",winner.name,winner.ID,max_votes);
+        pressEnter();
         }
         else if (winner_found == 0){
             printf("Two or more candidate have same number of votes:\n");
+            pressEnter();
         }
     }
 }
