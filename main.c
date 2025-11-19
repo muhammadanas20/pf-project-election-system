@@ -275,7 +275,7 @@ void addCandidates(){
         printf("Login sucessfull\n");
         if (currentStudent.hasvoted){
             printf("You already cast a vote!\nVote cannot be withrawn.");
-            pressEnter();
+            pressEnter();               
             viewResult();
             return;
         }
@@ -365,7 +365,7 @@ void viewResult(){
     struct candidates winner;
     int total_votes = 0;
     int max_votes = -1;
-    int winner_found = 0;
+    int tie_exist = 0;
     system(clear_screen);
     printf("---------------------------------------\n");
     printf("             ELECITON RESULT           \n");
@@ -381,31 +381,42 @@ void viewResult(){
     printf("---------------------------------------\n");
     printf("| ID  | Name                 | Votes   |\n");
     printf("---------------------------------------\n");
+     fseek(fp, 0, SEEK_SET);
     while(fread(&candidate,sizeof(struct candidates),1,fp)){
         printf("| %-3d | %-20s | %-7d |\n",candidate.ID,candidate.name,candidate.votes);
         total_votes += candidate.votes;
         if(candidate.votes > max_votes){
             max_votes = candidate.votes;
             winner = candidate;
-            winner_found = 1;
+            tie_exist = 0;
+        }
+        else if( candidate.votes == max_votes && max_votes != -1){
+            tie_exist = 1;
         }
     }
-    fclose(fp);
     printf("---------------------------------------\n");
     if(total_votes == 0){
-        printf("No votes is being cast\n");
+        printf("No votes are being cast\n");
         pressEnter();
+        fclose(fp);
         return;
     }
-    else{
+
+    if(tie_exist == 0){
         printf("Total vote Cast: %d\n",total_votes);
-        if(winner_found){
         printf("Current winner is %s , ID %d with %d votes\n",winner.name,winner.ID,max_votes);
         pressEnter();
-        }
-        else if (winner_found == 0){
-            printf("Two or more candidate have same number of votes:\n");
-            pressEnter();
-        }
+    }else{
+          fseek(fp, 0, SEEK_SET);
+          while(fread(&candidate,sizeof(struct candidates),1,fp)){
+            printf("Two or more candidates have same number of votes:\n");
+            printf("ID\t tied candidates \tvotes\n");
+            if(candidate.votes == max_votes){
+                 printf("%d\t%s\t\t\t%d\n",candidate.ID,candidate.name,candidate.votes);
+            }
+
     }
+}
+ fclose(fp);
+ pressEnter();
 }
