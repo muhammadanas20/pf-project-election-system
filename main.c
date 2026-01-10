@@ -80,7 +80,7 @@ void pressEnter(){
     getchar();
 }
 char* passwordgenerator(char name[], char ID[]) {
-    static char password[50]; 
+    static char password[100]; 
     const char chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     
     // name + id first
@@ -175,12 +175,12 @@ void addNewstudent(){
     fgets(newStudent.name,sizeof(newStudent.name),stdin);
     newStudent.name[strcspn(newStudent.name, "\n")] = 0;
     int choice;
-    printf("1.create your own password for students or 2.generate randomly:");
+    printf("1.Create your own password for student\n2.Generate randomly\nEnter choice:");
     scanf("%d",&choice);
     while(getchar() != '\n');
     switch(choice){
         case 1:
-        printf("Enter :");
+        printf("Enter your own password:");
         fgets(newStudent.password,sizeof(newStudent.password),stdin);
         newStudent.password[strcspn(newStudent.password, "\n")] = 0;
         break;
@@ -293,7 +293,7 @@ void addCandidates(){
  void voteCasting(struct students loggedInStudent){
        struct candidates candidate;
        FILE* fp;
-       int voteID;;
+       int voteID;
        int foundcandidate = 0;
        system(clear_screen);
        printf("---------------------------------------\n");
